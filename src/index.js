@@ -1,17 +1,45 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const states = []
+let calls = -1 // !!
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function useState(defaultValue) {
+  const callId = ++calls // !!
+  if (states[callId]) {
+    return states[callId]
+  }
+  const setValue = newValue => {
+    states[callId][0] = newValue;
+    renderWithCustomHooks();
+  }
+  const tuple = [defaultValue, setValue]
+  states[callId] = tuple // !!
+  return tuple
+}
+
+
+function App() {
+  const [count, setCount] = useState(0)
+  console.log(count);
+  return (
+    <div>
+      <button onClick={() => setCount(count+1)}>+</button>
+        {count}
+      <button onClick={() => setCount(count-1)}>-</button>
+    </div>
+  );
+}
+
+
+const renderWithCustomHooks = () => {
+  calls = -1;
+  ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    document.getElementById('root')
+  );
+}
+
+renderWithCustomHooks()
