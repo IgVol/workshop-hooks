@@ -1,26 +1,13 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useThing } from "./useThing";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export default () => {
+  console.log(useThing, useThing())
+  const thing = useThing();
 
-export default App;
+  if (!thing) {
+    return <div>Loading...</div>;
+  }
+
+  return <div>This is your thing: {thing}</div>;
+};
