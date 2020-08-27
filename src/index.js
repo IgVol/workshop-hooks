@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import './styles.css'
 
 function App() {
   const [count, setCount] = useState(0)
-  console.log(count);
   return (
     <div>
       <button onClick={() => setCount(count+1)}>+</button>
